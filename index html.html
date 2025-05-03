@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Gallery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        body {
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            color: white;
+        }
+
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .video-background iframe {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100vw;
+            height: 100vh;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        @media (min-aspect-ratio: 16/9) {
+            .video-background iframe {
+                /* height = 100 * (9/16) = 56.25 */
+                height: 56.25vw;
+            }
+        }
+        
+        @media (max-aspect-ratio: 16/9) {
+            .video-background iframe {
+                /* width = 100 / (9/16) = 177.78 */
+                width: 177.78vh;
+            }
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border: 2px solid white;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            p {
+                font-size: 1.2rem;
+            }
+            
+            .btn {
+                padding: 12px 24px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="video-background">
+        <iframe 
+            src="https://www.youtube.com/embed/u4K9IsEK1iI?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&playlist=u4K9IsEK1iI&mute=1" 
+            frameborder="0" 
+            allowfullscreen
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+        </iframe>
+        <div class="overlay"></div>
+    </div>
+
+    <div class="content">
+        <h1>Our Special Day</h1>
+        <p>We invite you to celebrate our wedding day with us. View our wedding gallery to relive the beautiful moments we shared together.</p>
+        <a href="https://fotoshare.co/e/5Kd6SbA3PbQ7WBTCcgPwE" class="btn" target="_blank">View Wedding Gallery</a>
+    </div>
+
+    <script>
+        // This ensures the video is properly sized on load and resize
+        function resizeVideo() {
+            const iframe = document.querySelector('.video-background iframe');
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            
+            if (width / height > 16 / 9) {
+                iframe.style.width = width + 'px';
+                iframe.style.height = width * 9 / 16 + 'px';
+            } else {
+                iframe.style.width = height * 16 / 9 + 'px';
+                iframe.style.height = height + 'px';
+            }
+        }
+
+        window.addEventListener('load', resizeVideo);
+        window.addEventListener('resize', resizeVideo);
+    </script>
+</body>
+</html>
